@@ -12,7 +12,9 @@ myhtml %>% html_nodes("p") %>% html_text->ranks
 
 fdata<-cbind(names,ranks)%>%as.data.frame%>%
   mutate(ranks=as.character(ranks))%>%
-  mutate(Emeritus=grepl("Emeritus", ranks),Associate=grepl("Associate", ranks))%>%
+  mutate(Emeritus= as.numeric(grepl("Emeritus", ranks)),Associate= as.numeric(grepl("Associate", ranks)),
+         Assistant= as.numeric(grepl("Assistant", ranks)),Lecturer= as.numeric(grepl("Lecturer", ranks)))%>%
   mutate(names=as.character(names))%>%
-  separate(names, c("last", "first"), sep=",")%>%
-  mutate(gender=gender(fdata$names2))
+  separate(names, c("last", "first"), sep=" ")
+  
+genders<-gender(fdata$first)[4]
