@@ -2,6 +2,7 @@ library(tidyverse)
 library(rvest)
 library(stringr)
 library(magrittr)
+library(gender)
 myurl<-"http://catalog.iastate.edu/faculty/"
 myhtml<-read_html(myurl)
 
@@ -11,5 +12,7 @@ myhtml %>% html_nodes("p") %>% html_text->ranks
 
 fdata<-cbind(names,ranks)%>%as.data.frame%>%
   mutate(ranks=as.character(ranks))%>%
-  mutate(Emeritus=grepl("Emeritus", ranks),Associate=grepl("Associate", ranks))
-
+  mutate(Emeritus=grepl("Emeritus", ranks),Associate=grepl("Associate", ranks))%>%
+  mutate(names=as.character(names))%>%
+  separate(names, c("last", "first"), sep=",")%>%
+  mutate(gender=gender(fdata$names2))
