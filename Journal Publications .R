@@ -11,7 +11,7 @@ myattr<-html_attr(mynodes, "class")
 myattr
 #Alternatively, use the piping operator 
 facpaths<-html_nodes(myhtml, "a")[62:86] %>% html_attr("href")
-
+Please work
 #Stumping the constant for href e.g. header 
 mystub<-"https://www.pols.iastate.edu"
 myurls<-paste0(mystub, myattr)
