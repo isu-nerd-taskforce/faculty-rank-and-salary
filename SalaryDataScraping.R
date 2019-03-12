@@ -3,13 +3,10 @@ library(rvest)
 library(stringr)
 library(magrittr)
 
-myurl<-"https://www.legis.iowa.gov/publications/fiscal/salaryBook"
+
+myurl<-"https://db.desmoinesregister.com/state-salaries-for-iowa/?searchterms%5Bcol3%5D=&searchterms%5Bcol2%5D=Iowa+State+University&searchterms%5Bcol6%5D=&searchterms%5Bcol11%5D=2018"
+
 myhtml<-read_html(myurl)
 
-nodes<-html_nodes(myhtml, "div")[21]
-myattr<-html_attr(nodes, "class")
-myattr
+html_nodes(myhtml, "table") %>%  html_table(header=TRUE)
 
-
-
-table<-html_table()
