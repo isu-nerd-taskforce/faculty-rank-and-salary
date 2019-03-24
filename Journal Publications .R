@@ -67,3 +67,5 @@ return(tex)}
 
 
 topjournaldata<-do.call(rbind, lapply(mydepurls,topjournals))
+
+write.csv(topjournaldata, "topjournals.csv")
