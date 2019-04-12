@@ -16,5 +16,4 @@ fdata<-cbind(names,ranks)%>%as.data.frame%>%
          Assistant= as.numeric(grepl("Assistant", ranks)),Lecturer= as.numeric(grepl("Lecturer", ranks)))%>%
   mutate(names=as.character(names))%>%
   separate(names, c("last", "first"), sep=" ")
-  
-genders<-gender(fdata$first)[4]
+write.csv(fdata, "namesandranks.csv")
