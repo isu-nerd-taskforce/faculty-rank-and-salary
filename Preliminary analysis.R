@@ -2,31 +2,21 @@ library(magrittr)
 library(tidyverse)
 library(rvest)
 library(stringr)
+library(wru)
 ##Load data
 
-sal<-read.csv("profsalaries.csv")
+sal<-read.csv("genderracesalary.csv")
 
-
-#Gender
-sal$female<-NA
-sal$female[sal$Sex=="F"]<-1
-sal$female[is.na(sal$female)]<-0
-
-data<-sal%>%mutate(Emeritus= as.numeric(grepl("Emer", Position)),Associate= as.numeric(grepl("Assoc", Position)),
-       Assistant= as.numeric(grepl("Asst", Position)),Lecturer= as.numeric(grepl("Lecturer", Position)),
-       Adjunct= as.numeric(grepl("Adj", Position)))
-
-data$Salary = as.numeric(gsub("[\\$,]", "", data$FY.Salary))
 
 #Prelim Analysis
-base<-lm(Salary~female, data=data)
+base<-lm(Salary~female+black+hisp+asian, data=sal)
 summary(base)
 
 
 #lm with assosiate as reference group
-rank<-lm(Salary~Emeritus+Assistant+Lecturer, data=data)
+rank<-lm(Salary~Emeritus+Assistant+Lecturer, data=sal)
 summary(rank)
 
 #
-full<-lm(Salary~female+Emeritus+Assistant+Lecturer, data=data)
+full<-lm(Salary~female+Emeritus+Assistant+Lecturer, data=sal)
 summary(full)
